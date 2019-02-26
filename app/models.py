@@ -115,7 +115,7 @@ class Comment(db.Model):
      
 
     pitch_id = db.Column(db.Integer,db.ForeignKey('pitch.id'))
-    user_id = db.Column(db.Integer,db.ForeignKey("roles.id"))
+    user_id = db.Column(db.Integer,db.ForeignKey("pitches.id"))
 
 
     def __repr__(self):
