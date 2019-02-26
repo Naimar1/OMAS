@@ -31,7 +31,7 @@ def load_user(user_id):
 #     image_path = db.Column(db.String)
 #     movie_review = db.Column(db.String)
 #     posted = db.Column(db.DateTime,default=datetime.utcnow)
-#     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
+#     users = db.relationship('User',backref = 'role',lazy="dynamic")
 
 #     all_reviews = []
 
@@ -72,14 +72,14 @@ class User(UserMixin,db.Model):
     id = db.Column(db.Integer,primary_key = True)
     username = db.Column(db.String(255),index = True)
     email = db.Column(db.String(255),unique = True,index = True)
-    role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))
+     
     password_hash = db.Column(db.String(255))
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
     
     pass_secure = db.Column(db.String(255))
 
-    reviews = db.relationship('Review',backref = 'user',lazy = "dynamic")
+    # reviews = db.relationship('Review',backref = 'user',lazy = "dynamic")
     @property
     def password(self):
         raise AttributeError('You cannot read the password attribute')
@@ -96,12 +96,26 @@ class User(UserMixin,db.Model):
     def __repr__(self):
         return f'User {self.username}'
 
-# class Role(db.Model):
+class pitch(db.Model):
+    __tablename__ = 'pitches'
+
+    id = db.Column(db.Integer,primary_key = True)
+    category = db.Column(db.String(255))
+     
+    pitch_id = db.Column(db.Integer,db.ForeignKey('pitches.id'))
+
+    def __repr__(self):
+        return f'User {self.name}'
+
+# class comm(db.Model):
 #     __tablename__ = 'roles'
 
 #     id = db.Column(db.Integer,primary_key = True)
-#     name = db.Column(db.String(255))
-#     users = db.relationship('User',backref = 'role',lazy="dynamic")
+#     category = db.Column(db.String(255))
+#     
+
+# role_id = db.Column(db.Integer,db.ForeignKey('role.id'))
+# user_id = db.Column(db.Integer,db.ForeignKey("roles.id"))
 
 
 #     def __repr__(self):
