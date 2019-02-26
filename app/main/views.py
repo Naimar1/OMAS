@@ -2,7 +2,7 @@ from flask import render_template,request,redirect,url_for,abort
 from . import main
 # from ..request import get_movies,get_movie,search_movie
 from .forms import ReviewForm,UpdateProfile
-from ..models import User
+from ..models import User,Pitch,Comment
 from flask_login import login_required, current_user
 from .. import db,photos
 import markdown2
