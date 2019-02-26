@@ -6,7 +6,7 @@
         {% if title %}
         <title> {{ title }}</title>
         {% else %}
-        <title> Welcome to the best Movie Review website </title>
+        <title> Welcome </title>
         {% endif %}
         {% extends 'base.html'%}
         {% import 'macros.html' as macro%}
@@ -21,11 +21,16 @@
     </head>
   
     <body>
+        <div class="container">
+            <div class="jumbotron">
+                <h1>Pitches Place</h1>
+            </div>
+        </div>
    
 
     <!-- Content block -->
    
-    {% block content %}
+    <!-- {% block content %}
 
 <div class="container">
     <form>
@@ -36,23 +41,23 @@
 </div>
 
     <!-- Popular movie -->
-    <h3> Popular Movies</h3>
+    <!-- <h3> Popular Movies</h3>
     <ul>
         {{ macro.displayMovieList(popular)}}
-    </ul>
+    </ul> -->
     <!-- Upcoming movie  -->
-    <h3> Upcoming Movies </h3>
+    <!-- <h3> Upcoming Movies </h3>
     <ul>
         {{ macro.displayMovieList(upcoming)}}
-    </ul>
+    </ul> -->
     <!-- Now showing movie -->
-    <h3>Now Showing</h3>
+    <!-- <h3>Now Showing</h3>
     <ul>
         {{ macro.displayMovieList(now_showing)}}
-    </ul>
+    </ul> -->
 
 
-{% endblock%}
+<!-- {% endblock%} --> 
        
 </body>
 </html>
