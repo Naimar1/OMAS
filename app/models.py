@@ -107,14 +107,14 @@ class Pitch(db.Model):
     def __repr__(self):
         return f'User {self.name}'
 
-class comment(db.Model):
+class Comment(db.Model):
     __tablename__ = 'comments'
 
     id = db.Column(db.Integer,primary_key = True)
     category = db.Column(db.String(255))
      
 
-    role_id = db.Column(db.Integer,db.ForeignKey('role.id'))
+    pitch_id = db.Column(db.Integer,db.ForeignKey('pitch.id'))
     user_id = db.Column(db.Integer,db.ForeignKey("roles.id"))
 
 
