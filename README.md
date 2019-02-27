@@ -11,4 +11,11 @@ Also you can see different categories of pitches, another thing you can see is t
 | Users     | Pitches_category      | Comments |
 | ------------- |:-------------:| -----:|
 | User can login before doing anything else .| User can create one or more pitches .| User also can create a comment on the pitch.|
-| User can see the created pitches on the profile page  | User should view different categories of pitches. | User can put comments in different categories of pitches. |
+| User can see the created pitches on the profile page | User should view different categories of pitches. | User can put comments in different categories of pitches.|
+
+## Setup/Installation Requirements
+* Link to visit: 
+* cd Pitches
+* code . (if you are using visual studio)
+* atom .
+* run : ./start.sh
