@@ -114,7 +114,7 @@ class Comment(db.Model):
     category = db.Column(db.String(255))
      
 
-    pitch_id = db.Column(db.Integer,db.ForeignKey('pitch.id'))
+    pitch_id = db.Column(db.Integer,db.ForeignKey('pitches.id'))
     user_id = db.Column(db.Integer,db.ForeignKey("pitches.id"))
 
 
