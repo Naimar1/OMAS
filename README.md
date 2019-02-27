@@ -23,3 +23,6 @@ Also you can see different categories of pitches, another thing you can see is t
 ## Known Bugs
 Hope that my codes is clear and understandable,
 There are no errors, by mistake if you find them please contact me for the below address.
+
+## Technologies Used
+ * Python
