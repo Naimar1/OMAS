@@ -72,7 +72,6 @@ class User(UserMixin,db.Model):
     id = db.Column(db.Integer,primary_key = True)
     username = db.Column(db.String(255),index = True)
     email = db.Column(db.String(255),unique = True,index = True)
-    #pitch_id = db.Column(db.Integer,db.ForeignKey('pitches.id'))
     password_hash = db.Column(db.String(255))
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
@@ -101,6 +100,7 @@ class Pitch(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     category_id = db.Column(db.Integer)
     category_title = db.Column(db.String)
+    category_contents = db.Column(db.String)
     posted = db.Column(db.DateTime,default=datetime.utcnow)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
     comments = db.relationship('Comment',backref = 'pitch',lazy="dynamic") 
@@ -124,7 +124,8 @@ class Comment(db.Model):
 
     id = db.Column(db.Integer,primary_key = True)
     pitch_id = db.Column(db.Integer)
-    pitch_title = db.Column(db.String(255))
+    pitch_title = db.Column(db.String)
+    pitch_message = db.Column(db.String(255))
     pitch_writer = db.Column(db.String)
     posted = db.Column(db.DateTime,default=datetime.utcnow)
     
