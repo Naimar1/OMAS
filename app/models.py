@@ -72,14 +72,13 @@ class User(UserMixin,db.Model):
     id = db.Column(db.Integer,primary_key = True)
     username = db.Column(db.String(255),index = True)
     email = db.Column(db.String(255),unique = True,index = True)
-    users = db.relationship('User',backref = 'role',lazy="dynamic") 
+    #pitch_id = db.Column(db.Integer,db.ForeignKey('pitches.id'))
     password_hash = db.Column(db.String(255))
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
-    
     pass_secure = db.Column(db.String(255))
-
-    # reviews = db.relationship('Review',backref = 'user',lazy = "dynamic")
+    comments = db.relationship('Comment',backref = 'user',lazy = "dynamic")
+    pitches = db.relationship('Pitch',backref = 'user',lazy = "dynamic")
     @property
     def password(self):
         raise AttributeError('You cannot read the password attribute')
@@ -100,9 +99,21 @@ class Pitch(db.Model):
     __tablename__ = 'pitches'
 
     id = db.Column(db.Integer,primary_key = True)
-    category = db.Column(db.String(255))
-     
-    pitch_id = db.Column(db.Integer,db.ForeignKey('pitches.id'))
+    category_id = db.Column(db.Integer)
+    category_title = db.Column(db.String)
+    user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
+    comments = db.relationship('Comments',backref = 'pitch',lazy="dynamic") 
+
+    def save_pitch(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @classmethod
+    def get_pitches(cls,id):
+        pitches = Pitch.query.filter_by(category_id = id).all()
+        return pitches
+
+
 
     def __repr__(self):
         return f'User {self.name}'
@@ -111,11 +122,21 @@ class Comment(db.Model):
     __tablename__ = 'comments'
 
     id = db.Column(db.Integer,primary_key = True)
-    category = db.Column(db.String(255))
-     
-
+    pitch_id = db.Column(db.Integer)
+    pitch_title = db.Column(db.String(255))
+    pitch_writer = db.Column(db.String)
+    
     pitch_id = db.Column(db.Integer,db.ForeignKey('pitches.id'))
-    user_id = db.Column(db.Integer,db.ForeignKey("pitches.id"))
+    user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
+
+    def save_comment(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @classmethod
+    def get_comments(cls,id):
+        comments = Comment.query.filter_by(pitch_id=id).all()
+        return comments
 
 
     def __repr__(self):
