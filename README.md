@@ -4,4 +4,11 @@
 ## Description
 
 This project is about register and then sign in, After that a user should create a pitch and can let a comment on that pitch
-Also you can see different categories of pitches, another thing you can see is the pitches created on the profile page 
+Also you can see different categories of pitches, another thing you can see is the pitches created on the profile page.
+
+## BDD Specification
+
+| Users     | Pitches_category      | Comments |
+| ------------- |:-------------:| -----:|
+| User can login before doing anything else .| User can create one or more pitches .| User also can create a comment on the pitch.|
+| User can see the created pitches on the profile page  | User should view different categories of pitches. | User can put comments in different categories of pitches. |
