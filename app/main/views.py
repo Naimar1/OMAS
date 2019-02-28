@@ -52,6 +52,7 @@ def update_profile(uname):
 @login_required
 def new_pitch():
     pitch_form = PitchForm()
+    new_pitch= None
     if pitch_form.validate_on_submit():
         title = pitch_form.title.data
         pitch = pitch_form.text.data
