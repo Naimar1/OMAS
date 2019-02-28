@@ -21,15 +21,45 @@
     </head>
   
     <body>
-
-        {% block content %}
-        <div class="container">
-            <div class="jumbotron">
-                <h1>Pitches's Place</h1>
+            {%block content%}
+            <div class="jumbotron text-center" style="background-color: bisque; color: darkcyan; padding: 55px 25px; font-family: monospace;">
+                <h1> Pitches Place </h1>
             </div>
-        </div>
-        {% endblock%}
-   
+            
+            <div class="container" style= "font-family: Times New Roman, Times, serif">
+                <div class="row">
+                    
+                    <div class="col-md-6">
+                        <div class="well well-lg">
+                            <h3>Students Pitches</h3>
+                            <p>It is your time to tell us about the project you think about, please be open.</p>
+                            <a href="{{url_for('main.studentPitch')}}" class="btn btn-success -center"> More</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="well well-lg">
+                            <h3>Courses Pitches</h3>
+                            <p> Here is many courses you can learn, you can choose one or more </p>
+                            <a href="{{url_for('main.coursesPitch')}}" class="btn btn-success -center"> More</a>
+                        </div>
+                    </div><br>
+                    <div class="container" style="margin-top: 110px;">
+                        <a href="{{url_for('main.new_pitch')}}" class="btn btn-success active">new pitch</a>
+                    </div>
+                </div>
+            </div>
+            {%endblock%}
+            
+        </head>
+      
+        <body>
+    
+    <h2>ok</h2>
+           
+    </body>
+    </html>
+
+       
 
    
        

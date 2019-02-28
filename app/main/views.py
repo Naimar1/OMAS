@@ -1,7 +1,7 @@
 from flask import render_template,request,redirect,url_for,abort
 from . import main
 # from ..request import get_movies,get_movie,search_movie
-from .forms import ReviewForm,UpdateProfile
+from .forms import UpdateProfile,PitchForm,CommentForm
 from ..models import User,Pitch,Comment
 from flask_login import login_required, current_user
 from .. import db,photos
@@ -113,5 +113,84 @@ def update_profile(uname):
 #         abort(404)
 #     format_review = markdown2.markdown(review.movie_review,extras=["code-friendly", "fenced-code-blocks"])
 #     return render_template('review.html',review = review,format_review=format_review)
+
+@main.route('/pitch/new', methods = ['GET','POST'])
+@login_required
+def new_pitch():
+    pitch_form = PitchForm()
+    if pitch_form.validate_on_submit():
+        title = pitch_form.title.data
+        pitch = pitch_form.text.data
+        category = pitch_form.category.data
+
+        # Updated pitch instance
+        new_pitch = Pitch(pitch_title=title,pitch_content=pitch,category=category,user=current_user,upvote=0,downvote=0)
+
+        # Save pitch method
+        new_pitch.save_pitch()
+        return redirect(url_for('.index'))
+
+    title = 'New pitch'
+    return render_template('new_pitch.html',title = title,pitch_form=pitch_form )
+
+
+@main.route('/pitches/studentPitch')
+def studentPitch():
+
+    pitches = Pitch.get_pitches('students')
+
+    return render_template("studentPitch.html", pitches = pitches)
+
+
+@main.route('/pitches/coursesPitch')
+def coursesPitch():
+
+    pitches = Pitch.get_pitches('courses')
+
+    return render_template("coursesPitch.html", pitches = pitches)
+
+
+@main.route('/pitch/<int:id>', methods = ['GET','POST'])
+def pitch(id):
+    pitch = Pitch.get_pitch(id)
+    if request.args.get("upvote"):
+        pitch.upvotes = pitch.upvotes + 1
+
+        db.session.add(pitch)
+        db.session.commit()
+
+        return redirect("/pitch/{pitch_id}".format(pitch_id=pitch.id))
+
+    elif request.args.get("downvote"):
+        pitch.downvotes = pitch.downvotes + 1
+
+        db.session.add(pitch)
+        db.session.commit()
+
+        return redirect("/pitch/{pitch_id}".format(pitch_id=pitch.id))
+
+    comment_form = CommentForm()
+    if comment_form.validate_on_submit():
+        comment = comment_form.text.data
+
+        new_comment = Comment(comment = comment,user = current_user,pitch_id = pitch)
+
+        new_comment.save_comment()
+
+
+    comments = Comment.get_comments(pitch)
+
+    return render_template("pitches.html", pitch = pitch, comment_form = comment_form, comments = comments)
+
+@main.route('/user/<uname>/pitches')
+def user_pitches(uname):
+    user = User.query.filter_by(username=uname).first()
+    pitches = Pitch.query.filter_by(user_id = user.id).all()
+    pitches_count = Pitch.count_pitches(uname)
+    user_joined = user.date_joined.strftime('%b %d, %Y')
+
+    return render_template("profile/user.html", user=user,pitches=pitches,pitches_count=pitches_count)
+
+
 
     

@@ -98,10 +98,12 @@ class Pitch(db.Model):
     __tablename__ = 'pitches'
 
     id = db.Column(db.Integer,primary_key = True)
-    category_id = db.Column(db.Integer)
-    category_title = db.Column(db.String)
-    category_contents = db.Column(db.String)
+    pitch_title = db.Column(db.String)
+    pitch_content = db.Column(db.String(255))
+    category = db.Column(db.String)
     posted = db.Column(db.DateTime,default=datetime.utcnow)
+    upvote = db.Column(db.Integer)
+    downvote = db.Column(db.Integer)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
     comments = db.relationship('Comment',backref = 'pitch',lazy="dynamic") 
 
@@ -111,8 +113,25 @@ class Pitch(db.Model):
 
     @classmethod
     def get_pitches(cls,id):
-        pitches = Pitch.query.filter_by(category_id = id).all()
+        pitches = Pitch.query.filter_by(id = id).all()
         return pitches
+
+    @classmethod
+    def get_pitch(cls,id):
+        pitch = Pitch.query.filter_by(id=id).first()
+
+        return pitch
+
+    @classmethod
+    def count_pitches(cls,uname):
+        user = User.query.filter_by(username=uname).first()
+        pitches = Pitch.query.filter_by(user_id=user.id).all()
+
+        pitches_count = 0
+        for pitch in pitches:
+            pitches_count += 1
+
+        return pitches_count
 
 
 
@@ -123,10 +142,8 @@ class Comment(db.Model):
     __tablename__ = 'comments'
 
     id = db.Column(db.Integer,primary_key = True)
-    pitch_id = db.Column(db.Integer)
-    pitch_title = db.Column(db.String)
-    pitch_message = db.Column(db.String(255))
-    pitch_writer = db.Column(db.String)
+    comment = db.Column(db.String(255))
+    comment_writer = db.Column(db.String)
     posted = db.Column(db.DateTime,default=datetime.utcnow)
     
     pitch_id = db.Column(db.Integer,db.ForeignKey('pitches.id'))
@@ -138,7 +155,7 @@ class Comment(db.Model):
 
     @classmethod
     def get_comments(cls,id):
-        comments = Comment.query.filter_by(pitch_id=id).all()
+        comments = Comment.query.filter_by(id=id).all()
         return comments
 
 
