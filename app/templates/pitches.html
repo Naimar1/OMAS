@@ -16,15 +16,15 @@
         <p>{{pitch.pitch_content}}</p>
         <span>
         <!-- <p>Posted on {{date}} by {{pitch.user.username| capitalize}}</p> -->
-        <a href="/pitch/{{pitch.id}}?upvote=1">
+        <a href="/pitch/{{pitch.id}}/1">
             <i class="far fa-thumbs-up"></i>
-        </a>{{pitch.upvote}} <a href="/pitch/{{pitch.id}}?downvote=1">
+        </a>{{pitch.like}} <a href="/pitch/{{pitch.id}}?dislike=1">
             <i class="far fa-thumbs-down"></i>
-        </a>{{pitch.downvote}}</span>
+        </a>{{pitch.dislike}}</span>
 
     </div>
     <div class="row">
-        <h4>Comments</h4>
+        <h2>Comments</h2>
         <hr>
         {% if current_user.is_authenticated %}
             {{ wtf.quick_form(comment_form) }}
