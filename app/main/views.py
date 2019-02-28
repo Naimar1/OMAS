@@ -139,7 +139,7 @@ def studentPitch():
 
     pitches = Pitch.get_pitches('students')
 
-    return render_template("studentPitch.html", pitches = pitches)
+    return render_template("category/studentPitch.html", pitches = pitches)
 
 
 @main.route('/pitches/coursesPitch')
@@ -147,7 +147,7 @@ def coursesPitch():
 
     pitches = Pitch.get_pitches('courses')
 
-    return render_template("coursesPitch.html", pitches = pitches)
+    return render_template("category/coursesPitch.html", pitches = pitches)
 
 
 @main.route('/pitch/<int:id>', methods = ['GET','POST'])

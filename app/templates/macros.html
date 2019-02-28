@@ -25,4 +25,15 @@
         </div>
     </div>
     {% endfor %}
+{% endmacro %}
+{% macro displayPitches(pitch_list) %}
+    {% for pitch in pitch_list %}
+    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 review-card">
+        <div class="well well-lg">
+            <h4>{{pitch.pitch_title}}</h4>
+            <p>{{pitch.pitch_content| truncate(100)}}</p>
+            <p>Written by:  {{pitch.user.username}} <a href="/pitch/{{pitch.id}}" class="btn btn-success">Read</a> </p>
+            </div>
+        </div>
+    {% endfor %}
 {% endmacro %} 
