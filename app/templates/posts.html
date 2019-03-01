@@ -1,36 +1,10 @@
-{% extends 'base.html'%}
+{% extends 'base.html' %}
 {% import 'macros.html' as macro%}
-{% import "bootstrap/wtf.html" as wtf %}
-
-{%block styles%}
-    {{ super() }}
-    <link href="https://fonts.googleapis.com/css?family=Indie+Flower|Ranga" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
-{%endblock%}
 <!-- Content block -->
 {%block content%}
-<div class="container" style="font-family: Times N">
-    <div class="row">
-        <h3>{{pitch.pitch_title}}</h3>
-        <hr>
-        <p>{{pitch.pitch_content}}</p>
-        <span>
-        <!-- <p>Posted on {{date}} by {{pitch.user.username| capitalize}}</p> -->
-        <a href="/pitch/{{pitch.id}}/1">
-            <i class="far fa-thumbs-up"></i>
-        </a>{{pitch.like}} <a href="/pitch/{{pitch.id}}?dislike=1">
-            <i class="far fa-thumbs-down"></i>
-        </a>{{pitch.dislike}}</span>
-
-    </div>
-    <div class="row">
-        <h2>Comments</h2>
-        <hr>
-        {% if current_user.is_authenticated %}
-            {{ wtf.quick_form(comment_form) }}
-        {%endif%}
-        {{macro.displayComments(comments)}}
-    </div>
-
+<div class="container">
+    <h1>All posts</h1>
+    <hr>
+    {{macro.displayPosts(posts)}}
 </div>
 {%endblock%}
