@@ -95,7 +95,7 @@ def post(id):
     post = Post.get_post(id)
 
     if form.validate_on_submit():
-        comment = form.text.data
+        comment = form.comment.data
 
         new_comment = Comment(comment=comment, user=current_user, post=post.id)
 
@@ -103,7 +103,7 @@ def post(id):
 
     comments = Comment.get_comments(post)
 
-    title = f'{post.title}'
+    title = f'{post.post_title}'
     return render_template('post.html', title=title, post=post, form=form, comments=comments)
 
 
