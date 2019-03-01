@@ -1,41 +1,13 @@
-<!-- {% macro displayMovieList(movie_list) %}
 
-    {% for movie in movie_list %}
-        <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 movie-card">
-            <img src="{{ movie.poster }}" alt="{{ movie.title }} poster" class="img-responsive">
-            <li class="text-center">
-                <a href="/movie/{{movie.id}}">
-                    {{ movie.title|truncate(10)}}</a>
-            </li>
-        </div>
+{% macro displayPosts(post_list)%}
+{%for post in post_list%}
+<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+    <div class="well well-lg" style="background-color: white;">
+        <h4>{{post.post_title}}</h4>
+        <p>{{post.post_content| truncate(120)}}</p>
+        <p>Posted on: {{post.date_posted.strftime('%Y-%m-%d')}} <a href="/post/{{post.id}}" class="btn btn-primary pull-right">Read</a></p>
 
-    {% endfor %}
-
-{% endmacro %} -->
-<!-- < Displaying comment in  macro -->
-{% macro displayComments(comment_list) %}
-    {% for comment in comment_list %}
-    <div class="row">
-
-        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 comment-card">
-          <h3>Writer</h3>
-          <h2>{{comment.id}}</h2>
-            <p>{{comment.comment | truncate(30) }}</p>
-            <p>{{comment.comment_writer | truncate(30) }}</p>
-
-       
-        </div>
     </div>
-    {% endfor %}
-{% endmacro %}
-{% macro displayPitches(pitch_list) %}
-    {% for pitch in pitch_list %}
-    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 review-card">
-        <div class="well well-lg">
-            <h4>{{pitch.pitch_title}}</h4>
-            <p>{{pitch.pitch_content| truncate(100)}}</p>
-            <p>Written by:  {{pitch.user.username}} <a href="/pitch/{{pitch.id}}" class="btn btn-success">View</a> </p>
-            </div>
-        </div>
-    {% endfor %}
-{% endmacro %} 
+</div>
+{%endfor%}
+{%endmacro%}
