@@ -71,7 +71,7 @@ def new_post():
         
         users = User.query.all()
         # Updated post instance
-        new_post = Post(post_title=title,post_content=pitch,user=current_user)
+        new_post = Post(post_title=title,post_content=post,user=current_user)
 
         # Save post method
         new_post.save_post()

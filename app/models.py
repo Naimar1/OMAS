@@ -42,7 +42,7 @@ class Post(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     post_title = db.Column(db.String)
     post_content = db.Column(db.String(255))
-    posted = db.Column(db.DateTime,default=datetime.utcnow)
+    date_posted = db.Column(db.DateTime, default=datetime.utcnow)
 
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
     comments = db.relationship('Comment',backref = 'pitch',lazy="dynamic") 
