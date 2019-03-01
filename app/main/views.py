@@ -1,11 +1,11 @@
 from flask import render_template,request,redirect,url_for,abort
 from . import main
-# from ..request import get_movies,get_movie,search_movie
-from .forms import UpdateProfile,PitchForm,CommentForm
-from ..models import User,Pitch,Comment
+from .forms import UpdateProfile,PostForm,CommentForm
+from ..models import User,Post,Comment
 from flask_login import login_required, current_user
 from .. import db,photos
 import markdown2
+from datetime import datetime
 
 
 @main.route('/')
@@ -14,7 +14,7 @@ def index():
     '''
     View root page function that returns the index page and its data
     '''
-    title = 'Home - Welcome to The best Movie Review Website Online'
+    title = 'Home - Welcome to our Blog site'
 
     return render_template('index.html', title = title )
 
@@ -44,30 +44,6 @@ def update_profile(uname):
 
         return redirect(url_for('.profile', uname = user.username))
 
-    return render_template('profile/update.html', form = form)
-
-
-
-@main.route('/pitch/new', methods = ['GET','POST'])
-@login_required
-def new_pitch():
-    pitch_form = PitchForm()
-    new_pitch= None
-    if pitch_form.validate_on_submit():
-        title = pitch_form.title.data
-        pitch = pitch_form.text.data
-        category = pitch_form.category.data
-
-        # Updated pitch instance
-        new_pitch = Pitch(pitch_title=title,pitch_content=pitch,category=category,user=current_user,like=0,dislike=0)
-
-        # Save pitch method
-        new_pitch.save_pitch()
-        return redirect(url_for('.index'))
-
-    title = 'New pitch'
-    return render_template('new_pitch.html',title = title,pitch_form=pitch_form, new_pitch=new_pitch)
-
 @main.route('/user/<uname>/update/pic', methods = ['POST'])
 def update_pic(uname):
     user = User.query.filter_by(username = uname).first()
@@ -80,91 +56,110 @@ def update_pic(uname):
 
     return redirect(url_for('main.profile', uname = uname))
 
-
-@main.route('/pitches/studentPitch')
-def studentPitch():
-
-    pitches = Pitch.get_pitches('students')
-
-    return render_template("category/studentPitch.html", pitches = pitches)
+    return render_template('profile/update.html', form = form)
 
 
-@main.route('/pitches/coursesPitch')
-def coursesPitch():
 
-    pitches = Pitch.get_pitches('courses')
+@main.route('/post/new', methods = ['GET','POST'])
+@login_required
+def new_post():
+    post_form = PostForm()
+    new_post= None
+    if post_form.validate_on_submit():
+        title = post_form.title.data
+        post = post_form.text.data
+        
+        users = User.query.all()
+        # Updated post instance
+        new_post = Post(post_title=title,post_content=pitch,user=current_user)
 
-    return render_template("category/coursesPitch.html", pitches = pitches)
+        # Save post method
+        new_post.save_post()
+        return redirect(url_for('.index'))
 
-@main.route('/pitch/<int:id>/<int:likes>', methods = ['GET','POST'])
-def pitch_likes(id,likes):
-    pitch = Pitch.get_pitch(id)
-    print(likes)
-    if request.args.get("like"):
-        pitch.like = likes
+    title = 'New post'
+    return render_template('new_post.html',title = title,post_form=post_form, new_post=new_post)
 
-        db.session.add(pitch)
-        db.session.commit()
+@main.route('/posts')
+def all_posts():
+    posts = Post.query.order_by(Post.date_posted.desc()).all()
 
-        return redirect("/pitch/{pitch_id}".format(pitch_id=pitch.id))
+    title = 'Blog-Post'
 
-    elif request.args.get("dislike"):
-        pitch.dislike = pitch.dislike + 1
+    return render_template('posts.html', title=title, posts=posts)
 
-        db.session.add(pitch)
-        db.session.commit()
 
-        return redirect("/pitch/{pitch_id}".format(pitch_id=pitch.id))
+@main.route('/post/<int:id>', methods=['GET', 'POST'])
+def post(id):
+    form = CommentForm()
+    post = Post.get_post(id)
 
-    return redirect(url_for('.pitch', id=pitch.id))
+    if form.validate_on_submit():
+        comment = form.text.data
 
-@main.route('/pitch/<int:id>', methods = ['GET','POST'])
-def pitch(id):
-    pitch = Pitch.get_pitch(id)
-    if request.args.get("like"):
-        pitch.like = pitch.like + 1
-
-        db.session.add(pitch)
-        db.session.commit()
-
-        return redirect("/pitch/{pitch_id}".format(pitch_id=pitch.id))
-
-    elif request.args.get("dislike"):
-        pitch.dislike = pitch.dislike + 1
-
-        db.session.add(pitch)
-        db.session.commit()
-
-        return redirect("/pitch/{pitch_id}".format(pitch_id=pitch.id))
-       
-    comment_form = CommentForm()
-    if comment_form.validate_on_submit():
-        comment = comment_form.title.data
-        commentm = comment_form.comment.data
-
-        new_comment = Comment(comment = comment,user = current_user,pitch_id = pitch.id, comment_writer=commentm)
+        new_comment = Comment(comment=comment, user=current_user, post=post.id)
 
         new_comment.save_comment()
 
+    comments = Comment.get_comments(post)
 
-    comments = Comment.get_comments(id)
-    user = Comment.query.filter_by(pitch_id=pitch.id).first()
-    # print(user.comment_writer)
-
-
-    return render_template("pitches.html", pitch = pitch, comment_form = comment_form, comments = comments, user=user)
+    title = f'{post.title}'
+    return render_template('post.html', title=title, post=post, form=form, comments=comments)
 
 
+@main.route('/delete_comment/<id>/<post_id>', methods=['GET', 'POST'])
+def delete_comment(id, post_id):
+    comment = Comment.query.filter_by(id=id).first()
 
-@main.route('/user/<uname>/pitches')
-def user_pitches(uname):
-    user = User.query.filter_by(username=uname).first()
-    pitches = Pitch.query.filter_by(user_id = user.id).all()
-    pitches_count = Pitch.count_pitches(uname)
-    user_joined = user.date_joined.strftime('%b %d, %Y')
+    db.session.delete(comment)
+    db.session.commit()
 
-    return render_template("profile/user.html", user=user,pitches=pitches,pitches_count=pitches_count)
-
+    return redirect(url_for('main.post', id=post_id))
 
 
-    
+@main.route('/delete_post/<id>', methods=['GET', 'POST'])
+def delete_post(id):
+    post = Post.query.filter_by(id=id).first()
+
+    db.session.delete(post)
+    db.session.commit()
+
+    return redirect(url_for('main.all_posts'))
+
+
+# @main.route('/subscribe/<id>')
+# def subscribe(id):
+#     user = User.query.filter_by(id=id).first()
+
+#     user.subscription = True
+
+#     db.session.commit()
+
+#     return redirect(url_for('main.index'))
+
+
+@main.route('/post/update/<id>', methods=['GET', 'POST'])
+def update_post(id):
+    form = PostForm()
+
+    post = Post.query.filter_by(id=id).first()
+
+    form.title.data = post.post_title
+    form.text.data = post.post_content
+
+    if form.validate_on_submit():
+        post_title = form.title.data
+        post_content = form.text.data
+
+        post.title = post_title
+        post.text = post_content
+
+        db.session.commit()
+
+        return redirect(url_for('main.post', id=post.id))
+
+    return render_template('update.html', form=form)
+
+
+
+
