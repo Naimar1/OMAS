@@ -1,11 +1,13 @@
 from flask import render_template,request,redirect,url_for,abort
 from . import main
-from .forms import UpdateProfile,PostForm,CommentForm
+from .forms import UpdateProfile,PostForm,CommentForm,SubscribeForm
 from ..models import User,Post,Comment,Subscription,Quotes
 from flask_login import login_required, current_user
 from .. import db,photos
 import markdown2
 from datetime import datetime
+from app.email import mail_message
+from ..request import get_quote
 
 
 @main.route('/')
@@ -14,9 +16,9 @@ def index():
     '''
     View root page function that returns the index page and its data
     '''
-    title = 'Home - Welcome to our Blog site'
-
-    return render_template('index.html', title = title )
+    title = ' Welcome to our Blog post site'
+    quote = get_quote()
+    return render_template('index.html', title=title, quote=quote)
 
 @main.route('/user/<uname>')
 def profile(uname):
@@ -127,15 +129,20 @@ def delete_post(id):
     return redirect(url_for('main.all_posts'))
 
 
-@main.route('/subscribe/<id>')
-def subscribe(id):
-    user = User.query.filter_by(id=id).first()
+@main.route('/subscribe/', methods=['GET', 'POST'])
+@login_required
+def sub():
+    """
+    Function that enables one to subscribe to the post blog
+    """
+    form = SubscribeForm()
+    if form.validate_on_submit():
+        subscription = Subscription(email=form.email.data)
+        db.session.add(subscription)
+        db.session.commit()
+        return redirect(url_for('main.index'))
 
-    user.subscription = True
-
-    db.session.commit()
-
-    return redirect(url_for('main.index'))
+    return render_template('subs.html', form=form)
 
 
 @main.route('/post/update/<id>', methods=['GET', 'POST'])

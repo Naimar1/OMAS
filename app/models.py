@@ -85,11 +85,11 @@ def __repr__(self):
 
 
 class Quotes():
-    def __init__(self, id, author, quote,permalink):
+    def __init__(self, id, author, quote):
         self.id = id
         self.author = author
         self.quote = quote
-        self.quote = permalink
+        
 
 
     
