@@ -14,7 +14,7 @@
         <p>{{post.post_content}}</p>
         <span>
         <p>Posted on {{post.date_posted.strftime('%Y-%m-%d')}}</p>
-        {% if current_user.is_authenticated and current_user.role_id == 1%}
+        {% if current_user.is_authenticated and current_user.post_id == 1%}
             <a href="{{url_for('main.delete_post',id = post.id)}}" class="btn btn-danger btn-sm">Delete post</a>
             <a href="/post/update/{{post.id}}" class="btn btn-info btn-sm">Update post</a>
         {%endif%}
@@ -29,7 +29,7 @@
             <div class="col-md-12">
                 <h5>{{comment.user.username}}</h5>
                 <p>{{comment.comment}}</p>
-                {% if current_user.is_authenticated and current_user.role_id == 1%}
+                {% if current_user.is_authenticated and current_user.post_id == 1%}
                     <a href="{{url_for('main.delete_comment',id = comment.id,post_id = comment.post)}}" class="btn btn-danger btn-sm">Delete comment</a>
                 {%endif%}
             </div>

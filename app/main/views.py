@@ -1,7 +1,7 @@
 from flask import render_template,request,redirect,url_for,abort
 from . import main
 from .forms import UpdateProfile,PostForm,CommentForm
-from ..models import User,Post,Comment
+from ..models import User,Post,Comment,Subscription,Quotes
 from flask_login import login_required, current_user
 from .. import db,photos
 import markdown2
@@ -127,15 +127,15 @@ def delete_post(id):
     return redirect(url_for('main.all_posts'))
 
 
-# @main.route('/subscribe/<id>')
-# def subscribe(id):
-#     user = User.query.filter_by(id=id).first()
+@main.route('/subscribe/<id>')
+def subscribe(id):
+    user = User.query.filter_by(id=id).first()
 
-#     user.subscription = True
+    user.subscription = True
 
-#     db.session.commit()
+    db.session.commit()
 
-#     return redirect(url_for('main.index'))
+    return redirect(url_for('main.index'))
 
 
 @main.route('/post/update/<id>', methods=['GET', 'POST'])

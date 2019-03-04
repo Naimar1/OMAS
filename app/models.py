@@ -75,5 +75,20 @@ class Comment(db.Model):
         comments = Comment.query.filter_by(post=post.id).all()
         return comments
 
+class Subscription(UserMixin, db.Model):
+    __tablename__ = 'subs'
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(255), unique=True, index=True, nullable=False)
+
+def __repr__(self):
+        return f'{self.email}'
+
+
+class Quotes():
+    def __init__(self, id, author, quote,permalink):
+        self.id = id
+        self.author = author
+        self.quote = quote
+
 
     
