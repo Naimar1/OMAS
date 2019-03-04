@@ -3,8 +3,13 @@
 <!-- Content block -->
 {%block content%}
 <div class="container">
-    <h1>All posts</h1>
+    <div class="jumbotron" style="min-height: 500vh">
+        <div class="well">
+          <h1 style="text-align:center; color : darkcyan; font-family: monospace; font-size: 45px;">All  Blog posts</h1>
+        </div>
     <hr>
-    {{macro.displayPosts(posts)}}
+    
+        {{macro.displayPosts(posts)}}
+    </div>
 </div>
 {%endblock%}

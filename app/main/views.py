@@ -45,8 +45,10 @@ def update_profile(uname):
         db.session.commit()
 
         return redirect(url_for('.profile', uname = user.username))
+    return render_template('profile/update.html', form = form)
 
 @main.route('/user/<uname>/update/pic', methods = ['POST'])
+@login_required
 def update_pic(uname):
     user = User.query.filter_by(username = uname).first()
 
@@ -56,11 +58,8 @@ def update_pic(uname):
         user.profile_pic_path = path
         db.session.commit()
 
-    return redirect(url_for('main.profile', uname = uname))
-
-    return render_template('profile/update.html', form = form)
-
-
+        return redirect(url_for('main.profile', uname = uname))
+ 
 
 @main.route('/post/new', methods = ['GET','POST'])
 @login_required
@@ -110,6 +109,7 @@ def post(id):
 
 
 @main.route('/delete_comment/<id>/<post_id>', methods=['GET', 'POST'])
+@login_required
 def delete_comment(id, post_id):
     comment = Comment.query.filter_by(id=id).first()
 
@@ -120,6 +120,7 @@ def delete_comment(id, post_id):
 
 
 @main.route('/delete_post/<id>', methods=['GET', 'POST'])
+@login_required
 def delete_post(id):
     post = Post.query.filter_by(id=id).first()
 

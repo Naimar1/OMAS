@@ -15,8 +15,7 @@
                 </ul>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                <!-- {% if current_user.is_authenticated %}
-                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{current_user.username| capitalize}} <span class="caret"></span></a> -->
+               
                 {% if current_user.is_authenticated %}
                 <li><a href="{{url_for('main.new_post')}}">Create post</a></li>
                 <li><a href="/subscribe/"></span> Subscribe</a></li>
@@ -25,7 +24,7 @@
                 <li><a href="{{url_for('auth.logout')}}">Sign out</a></li>
                 {% else %}
                 <li><a href="{{url_for('auth.login')}}">Sign in</a></li>
-                <!-- {%endif%} -->
+                
                 {%endif%}
             </ul>
 

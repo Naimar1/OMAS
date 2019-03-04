@@ -3,9 +3,10 @@
 {%for post in post_list%}
 <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
     <div class="well well-lg" style="background-color: white;">
-        <h4>{{post.post_title}}</h4>
+        <h4 style="text-align:center; font-family:monospace; font-size:35px; color: maroon">{{post.post_title}}</h4>
         <p>{{post.post_content| truncate(120)}}</p>
         <p>Posted on: {{post.date_posted.strftime('%Y-%m-%d')}} <a href="/post/{{post.id}}" class="btn btn-danger">View</a></p>
+        <a href="/delete_post/{{post.id}}" class="btn btn-danger" style="margin-bottom:60px;">Delete Post</a>
 
     </div>
 </div>
