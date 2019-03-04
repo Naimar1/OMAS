@@ -27,9 +27,11 @@
         </div>
         
         <div class="container" style= "font-family: 'Cormorant Upright', serif;">
-            <div class="jumbotron text-center" style="background-color: darkcyan; color: navajowhite; padding: 55px 25px; font-family: monospace;">
-              <h1>Blog Post</h1>
+            <div class="jumbotron text-center" style="background-color: darkcyan; color:darkcyan; padding: 55px 25px; font-family: monospace;">
+              <div class="well" style="color:darkcyan;">
+                <h1>Blog Post</h1>
             </div>
+            
             <div class="well" style="background-color:wheat">
                 <h1 style="text-align:center; color : darkcyan; font-family: monospace; font-size: 35px;">Quotes</h1>
                 <h1>{{ quote.id }}</h1>
@@ -40,6 +42,7 @@
             <!-- <a href="/subscribe/{{current_user.id}}" class="btn btn-success">Subscribe</a> -->
             <hr>
             {{macro.displayPosts(posts)}}
+        </div>
         </div>
         {%endblock%}
         
