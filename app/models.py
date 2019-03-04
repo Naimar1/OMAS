@@ -89,6 +89,7 @@ class Quotes():
         self.id = id
         self.author = author
         self.quote = quote
+        self.quote = permalink
 
 
     
