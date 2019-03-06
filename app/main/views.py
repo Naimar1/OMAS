@@ -7,7 +7,7 @@ from .. import db,photos
 import markdown2
 from datetime import datetime
 from app.email import mail_message
-from ..request import get_quote
+
 
 
 @main.route('/')
@@ -17,8 +17,8 @@ def index():
     View root page function that returns the index page and its data
     '''
     title = ' Welcome to our Blog post site'
-    quote = get_quote()
-    return render_template('index.html', title=title, quote=quote)
+   
+    return render_template('index.html', title=title)
 
 @main.route('/user/<uname>')
 def profile(uname):
