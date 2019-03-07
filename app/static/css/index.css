@@ -1,0 +1,9 @@
+.container{
+    background-color: black;
+}
+.jumbotron {
+    background-color: white;
+    color: black;
+    font-family: monospace;
+}
+

@@ -1,13 +1,4 @@
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        {% if title %}
-        <title> {{ title }}</title>
-        {% else %}
-        <title> Welcome </title>
-        {% endif %}
         {% extends 'base.html'%}
         {% import 'macros.html' as macro%}
 
@@ -15,15 +6,220 @@
 
         {% block styles%}
         {{ super() }}
-        <link rel="stylesheet" href="{{url_for('static',filename='index.css')}}">
+        <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}">
         {% endblock %}
+        {%block content%}
+        <div class="container">
+            <div class="jumbotron">
+                <div class="well">
+        <style>
+            body{
+            background-image:url(https://zdnet2.cbsistatic.com/hub/i/r/2012/11/26/278e55cc-1d11-11e4-8c7f-00505685119a/thumbnail/770x578/d7ee420bbcc0785819eb1f6950790483/cloud-horizon.jpg);
+            background-repeat:no-repeat;
+            background-size:cover;
+            }
+            .carousel-fade .carousel-inner .item {
+  -webkit-transition-property: opacity;
+  transition-property: opacity;
+}
+.carousel-fade .carousel-inner .item,
+.carousel-fade .carousel-inner .active.left,
+.carousel-fade .carousel-inner .active.right {
+  opacity: 0;
+}
+.carousel-fade .carousel-inner .active,
+.carousel-fade .carousel-inner .next.left,
+.carousel-fade .carousel-inner .prev.right {
+  opacity: 1;
+}
+.carousel-fade .carousel-inner .next,
+.carousel-fade .carousel-inner .prev,
+.carousel-fade .carousel-inner .active.left,
+.carousel-fade .carousel-inner .active.right {
+  left: 0;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+}
+.carousel-fade .carousel-control {
+  z-index: 2;
+}
+
+/*
+Fade content bs-carousel with hero headers
+Code snippet by maridlcrmn (Follow me on Twitter @maridlcrmn) for Bootsnipp.com
+Image credits: unsplash.com
+*/
+
+/********************************/
+/*       Fade Bs-carousel       */
+/********************************/
+.fade-carousel {
+    position: relative;
+    height: 100vh;
+}
+.fade-carousel .carousel-inner .item {
+    height: 100vh;
+}
+.fade-carousel .carousel-indicators > li {
+    margin: 0 2px;
+    background-color: #f39c12;
+    border-color: #f39c12;
+    opacity: .7;
+}
+.fade-carousel .carousel-indicators > li.active {
+  width: 10px;
+  height: 10px;
+  opacity: 1;
+}
+
+/********************************/
+/*          Hero Headers        */
+/********************************/
+.hero {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 3;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 0 rgba(0,0,0,.75);
+      -webkit-transform: translate3d(-50%,-50%,0);
+         -moz-transform: translate3d(-50%,-50%,0);
+          -ms-transform: translate3d(-50%,-50%,0);
+           -o-transform: translate3d(-50%,-50%,0);
+              transform: translate3d(-50%,-50%,0);
+}
+.hero h1 {
+    font-size: 6em;    
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}
+
+
+.fade-carousel .carousel-inner .item .hero {
+    opacity: 0;
+    -webkit-transition: 2s all ease-in-out 5s;
+       -moz-transition: 2s all ease-in-out 5s; 
+        -ms-transition: 2s all ease-in-out 5s; 
+         -o-transition: 2s all ease-in-out 5s; 
+            transition: 2s all ease-in-out 5s; 
+}
+.fade-carousel .carousel-inner .item.active .hero {
+    opacity: 1;
+    -webkit-transition: 2s all ease-in-out 5s;
+       -moz-transition: 2s all ease-in-out 5s; 
+        -ms-transition: 2s all ease-in-out 5s; 
+         -o-transition: 2s all ease-in-out 5s; 
+            transition: 2s all ease-in-out 5s;    
+}
+
+/********************************/
+/*            Overlay           */
+/********************************/
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    /* background-color: #080d15; */
+    opacity: .1;
+}
+
+/********************************/
+/*          Custom Buttons      */
+/********************************/
+.btn.btn-lg {padding: 10px 40px;}
+.btn.btn-hero,
+.btn.btn-hero:hover,
+.btn.btn-hero:focus {
+    color: #f5f5f5;
+    background-color: white;
+    border-color:black;
+    outline: none;
+    margin: 20px auto;
+}
+
+/********************************/
+/*       Slides backgrounds     */
+/********************************/
+.fade-carousel .slides .slide-1, 
+.fade-carousel .slides .slide-2,
+.fade-carousel .slides .slide-3 {
+  height: 100vh;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.fade-carousel .slides .slide-1 {
+  background-image: url(https://www.deere.com/assets/images/region-4/products/harvesting/corn-heads-r4d092234_rrd-1024x576.jpg); 
+}
+.fade-carousel .slides .slide-2 {
+  background-image: url(https://imageeditordmp.blob.core.windows.net/farmetweb/livefarmet.blob.core.windows.net/farmetwebdata/Media/ContentItems/4303_04303/m_max__o/prihnojovaci-kypric-fertis-4-5-02-2.jpeg);
+}
+.fade-carousel .slides .slide-3 {
+  background-image: url(http://az276019.vo.msecnd.net/valmontstaging/images/librariesprovider87/product-pages/product-page---child-2/vri-speed-control_33121_3136_700x332.jpg);
+}
+
+/********************************/
+/*          Media Queries       */
+/********************************/
+@media screen and (min-width: 980px){
+    .hero { width: 980px; }    
+}
+@media screen and (max-width: 640px){
+    .hero h1 { font-size: 4em; }    
+}
+        </style>
+        <div class="carousel fade-carousel slide carousel-fade" data-ride="carousel"
+        data-interval="5000" id="bs-carousel">
+            <!-- Overlay -->
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#bs-carousel" data-slide-to="0" class="active"></li>
+                <li data-target="#bs-carousel" data-slide-to="1"></li>
+                <li data-target="#bs-carousel" data-slide-to="2"></li>
+            </ol>
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <div class="item slides active carousel-item">
+                    <div class="slide-1">
+                        <div class="overlay"></div>
+                    </div>
+                </div>
+                <div class="item slides carousel-item">
+                    <div class="slide-2">
+                        <div class="overlay"></div>
+                    </div>
+                </div>
+                <div class="item slides carousel-item">
+                    <div class="slide-3">
+                        <div class="overlay"></div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
         
-    </head>
-  
-    <body>
+        <p>OMAS Ltd are your trusted source for quality tractors and farm equipment from the top international brands in the industry. We have a huge range of new and used tractors for sale Waikato wide. We showcase a diverse range of farm equipment, from our high horsepower range suited to the toughest jobs, to compact utility tractors for use in horticulture and grounds care.
+            We have been using and servicing tractors and farm machinery in our country over 2 years. Don’t buy a new tractor before you talk to us.</p> 
+        <img class="alignnone size-full wp-image-1305" src="https://www.israel21c.org/wp-content/uploads/2016/05/shutterstock_164855501-1000x657.jpg" alt="" width="300" height="250" srcset="https://www.israel21c.org/wp-content/uploads/2016/05/shutterstock_164855501-1000x657.jpg 250w, https://www.israel21c.org/wp-content/uploads/2016/05/shutterstock_164855501-1000x657.jpg 150w" sizes="(max-width: 250px) 100vw, 250px" style="margin-right:50px">
+        <img class="alignnone size-full wp-image-1305" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Tea_field_workers_in_rwanda.jpg/220px-Tea_field_workers_in_rwanda.jpg" alt="" width="300" height="250" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Tea_field_workers_in_rwanda.jpg/220px-Tea_field_workers_in_rwanda.jpg 250w, https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Tea_field_workers_in_rwanda.jpg/220px-Tea_field_workers_in_rwanda.jpg 150w" sizes="(max-width: 250px) 100vw, 250px" style="margin-right:50px" >
+        <img class="alignnone size-full wp-image-1305" src="http://rwandaiscoolio.weebly.com/uploads/7/5/4/9/7549740/5465165_orig.jpg" alt="" width="250" height="250" srcset="http://rwandaiscoolio.weebly.com/uploads/7/5/4/9/7549740/5465165_orig.jpg 250w, http://rwandaiscoolio.weebly.com/uploads/7/5/4/9/7549740/5465165_orig.jpg 150w" sizes="(max-width: 250px) 100vw, 250px" style="margin-right:50px">
        
-    </body>
- </html>
+        <p>Compare the quality of our New Zealand tractors and buy only the best possible equipment. We have powerful farm machinery for sale for every farm task.
+                
+            Our tractors for sale in Waikato include brands like Fendt, Massey Ferguson, Valtra, Iseki and many other farm equipment favourites in New Zealand. Whether you are looking for feed wagons, balers and harvesting, cultivating or ploughing equipment, you’ll find a range of top international models, outstanding workshop and parts services, and expert knowledge from us.</p>
+            
+        </div>
+        </div>
+
+      
+
+            {%endblock%}
+
 
        
 

@@ -4,19 +4,10 @@ from wtforms.validators import Required, Email, EqualTo, ValidationError
 from wtforms.validators import Required
 from ..models import Subscription
 
-class PostForm(FlaskForm):
+class ProductForm(FlaskForm):
 
     title = StringField('Post title',validators=[Required()])
     text = TextAreaField('text',validators=[Required()])
-    submit = SubmitField('Submit')
-
-
-class UpdateProfile(FlaskForm):
-    bio = TextAreaField('Tell us about you.',validators = [Required()])
-    submit = SubmitField('Submit')
-
-class CommentForm(FlaskForm):
-    comment = TextAreaField('Post Comment')
     submit = SubmitField('Submit')
 
 class SubscribeForm(FlaskForm):
