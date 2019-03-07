@@ -1,0 +1,10 @@
+.container{
+    background-color: darkcyan;
+}
+
+.jumbotron{
+    background-color: bisque;
+    color: darkcyan;
+    font-family: monospace;
+
+}

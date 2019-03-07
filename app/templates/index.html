@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        {% if title %}
+        <title> {{ title }}</title>
+        {% else %}
+        <title> Welcome </title>
+        {% endif %}
+        {% extends 'base.html'%}
+        {% import 'macros.html' as macro%}
+
+<!-- Styles block -->
+
+        {% block styles%}
+        {{ super() }}
+        <link rel="stylesheet" href="{{url_for('static',filename='index.css')}}">
+        {% endblock %}
+        
+    </head>
+  
+    <body>
+       
+    </body>
+ </html>
+
+       
+
+   
